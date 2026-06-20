@@ -1,0 +1,91 @@
+/* ==========================================================================
+   1. IMPORTAÇÃO E COMPORTAMENTO DE HERANÇA GLOBAL
+   ========================================================================== */
+@import url("../champions/champions.css");
+
+/* ==========================================================================
+   1B. CONTROLE UNIFICADO E SUBSCRITO DE CURSORES (FIX)
+   ========================================================================== */
+/* Cursor Padrão do Jogo */
+body, html, p, span, h1, h2, h3, th, td, div, table, tr, input[type="text"] {
+    cursor: url('../default/cursor.png') 50 50, auto !important;
+}
+
+/* Cursor de Clique / Interação (Hover) */
+button, 
+.menu, 
+.sugestao-item, 
+.btn-modo-menu,
+#btn-enviar,
+.btn-fala-audio,
+.btn-acao-principal,
+#btn-iniciar-jogo {
+    cursor: url('../default/cursor_hover.png') 50 50, pointer !important;
+}
+
+/* ==========================================================================
+   2. ADAPTAÇÃO E REDUÇÃO DO CONTAINER PRINCIPAL DE TENTATIVAS
+   ========================================================================== */
+.wrapper-tabela {
+    max-width: 600px;
+    margin: 15px auto 0 auto;
+}
+
+#resultado-linhas td img {
+    width: 64px;
+    height: 64px;
+    border-radius: 6px;
+}
+
+#resultado-linhas td span {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+/* ==========================================================================
+   3. CONTAINER EXCLUSIVO DO PLAYER DE ÁUDIO & CITAÇÃO TEXTUAL
+   ========================================================================== */
+.container-fala-player {
+    background-color: rgba(20, 20, 25, 0.7);
+    border: 1px solid #583774;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.fala-citacao {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #eceeed;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   4. INTERFACE DO BOTÃO DE REPRODUÇÃO DO ÁUDIO (FX / VOZ)
+   ========================================================================== */
+.btn-fala-audio {
+    background-color: #583774;
+    border: 1px solid yellow;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 25px;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-fala-audio:hover {
+    background-color: orange;
+    color: black;
+    transform: scale(1.05);
+}
+
+.icone-play {
+    margin-right: 8px;
+}

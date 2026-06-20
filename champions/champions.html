@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOLdle - Champions</title>
+    <link rel="stylesheet" href="champions.css">
+</head>
+<body>
+
+    <div id="popup-inicio" class="popup-overlay">
+        <div class="popup-conteudo">
+            <h2>Bem-vindo ao Modo Campeões!</h2>
+            <p>Clique no botão abaixo para ativar os efeitos sonoros e iniciar sua partida.</p>
+            <button id="btn-iniciar-jogo">JOGAR</button>
+        </div>
+    </div>
+
+    <div id="popup-vitoria" class="popup-overlay" style="display: none;">
+        <div class="popup-conteudo-vitoria">
+            <h2>Parabéns!</h2>
+            <p class="sub-vitoria">Você descobriu o campeão secreto!</p>
+            
+            <div class="vitoria-campeao-card">
+                <img id="popup-vitoria-img" src="" alt="Splash Art">
+                <h1 id="popup-vitoria-nome-campeao">NOME DO CAMPEÃO</h1>
+            </div>
+
+            <p id="popup-vitoria-tentativas" class="stats-txt">Tentativas: <strong>0</strong></p>
+
+            <div class="vitoria-center-action">
+                <button id="popup-reiniciar" class="btn-acao-principal">JOGAR NOVAMENTE</button>
+            </div>
+
+            <div class="popup-container-modos">
+                <h3>Escolha o Próximo Modo:</h3>
+                <button id="btn-champions" class="btn-modo-menu">Champions</button>
+                <button id="btn-falas" class="btn-modo-menu">Falas</button>
+                <button id="btn-habilidade" class="btn-modo-menu">Habilidade</button>
+                <button id="btn-emoji" class="btn-modo-menu">Emoji</button>
+                <button id="btn-splash-campeoes" class="btn-modo-menu">Splash art - Campeões</button>
+                <button id="btn-splash-itens" class="btn-modo-menu">Splash art - Itens</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CAIXA PRINCIPAL: Com os botões internos e largura correta conforme imagem 2 -->
+    <div class="caixa-texto">
+        
+        <button class="menu" id="voltar">VOLTAR</button>
+        <button class="menu" id="prox">PRÓXIMO</button>
+
+        <div class="clear"></div>
+
+        <img src="../default/logo.jpg" alt="logo" class="logo-top">
+        <h3>Adivinhe o campeão de League of Legends</h3>
+        
+        <div class="area-busca">
+            <div class="wrapper-input">
+                <input type="text" id="input-campeao" placeholder="Digite o nome do campeão..." autocomplete="off">
+                <div id="lista-sugestoes" class="sugestoes-box"></div>
+            </div>
+            <button id="btn-enviar">➔</button>
+        </div>
+
+        <div class="container-dicas">
+            <div class="topo-dicas">
+                <span class="titulo-dicas">DICAS</span>
+                <span id="contador-tentativas" class="contador-tentativas">Tentativas: 0</span>
+            </div>
+            
+            <div class="grade-dicas">
+                <div class="dica-card" data-prop="genero">
+                    <span class="label">GÊNERO</span>
+                    <span class="valor">?</span>
+                </div>
+                <div class="dica-card" data-prop="posicao">
+                    <span class="label">POSIÇÃO(ÕES)</span>
+                    <span class="valor">?</span>
+                </div>
+                <div class="dica-card" data-prop="classe">
+                    <span class="label">CLASSE(S)</span>
+                    <span class="valor">?</span>
+                </div>
+                <div class="dica-card" data-prop="recurso">
+                    <span class="label">RECURSO</span>
+                    <span class="valor">?</span>
+                </div>
+                <div class="dica-card" data-prop="alcance">
+                    <span class="label">TIPO DE ALCANCE</span>
+                    <span class="valor">?</span>
+                </div>
+                <div class="dica-card" data-prop="regiao">
+                    <span class="label">REGIÃO(ÕES)</span>
+                    <span class="valor">?</span>
+                </div>
+                <div class="dica-card" data-prop="ano">
+                    <span class="label">ANO DE LANÇAMENTO</span>
+                    <span class="valor">?</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-tabela">
+            <table id="tabela-resultados">
+                <thead>
+                    <tr>
+                        <th>Campeão</th>
+                        <th>Gênero</th>
+                        <th>Posição(ões)</th>
+                        <th>Classe(s)</th> 
+                        <th>Recurso</th>
+                        <th>Tipo de alcance</th>
+                        <th>Região(ões)</th>
+                        <th>Ano de lançamento</th>
+                    </tr>
+                </thead>
+                <tbody id="resultado-linhas"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <audio id="audio-hover" src="../default/hover.mp3" preload="auto"></audio>
+    <audio id="audio-click" src="../default/click.mp3" preload="auto"></audio>
+
+    <script src="lista_camp.js"></script>
+    <script src="champions.js"></script>
+</body>
+</html>

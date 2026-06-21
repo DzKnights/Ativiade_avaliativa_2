@@ -310,8 +310,52 @@ h3 {
     text-transform: uppercase;
 }
 
+/* BOTÕES INTERNOS CONFIGURADOS COM OS ARQUIVOS DO REPOSITÓRIO GITHUB */
+.btn-modo-menu {
+    color: white;
+    font-size: 1.15rem;
+    font-weight: bolder;
+    border: 2px solid #ffe600;
+    border-radius: 15px;
+    outline: none;
+    margin: 12px auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 380px;
+    height: 85px;
+    padding: 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    cursor: pointer; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+#btn-champions {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../default/fundo_champions.png');
+}
+
+#btn-falas {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../default/fundo_falas.png');
+}
+
+.btn-modo-menu:hover {
+    color: orange;
+    transform: scale(1.03); 
+    box-shadow: 0 0 15px rgba(255, 162, 0, 0.6);
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 /* ==========================================================================
-   5. RENDERIZADOR COMPLETO DA LISTA DE ERROS
+   5. RENDERIZADOR COMPLETO DA LISTA DE ERROS (ESTILO LOLDLE ORIGINAL)
    ========================================================================== */
 .container-tentativas-erradas {
     margin: 20px auto;

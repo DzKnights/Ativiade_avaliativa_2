@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // GERADOR DINÂMICO DE CAMPEÕES (Garante o funcionamento do Autocomplete)
     // ==========================================================================
-    if (!LISTA_SPLASH || LISTA_SPLASH.length === 0) {
+    if (typeof LISTA_SPLASH === 'undefined' || !LISTA_SPLASH || LISTA_SPLASH.length === 0) {
         alert("Erro: LISTA_SPLASH não foi carregada corretamente.");
         return;
     }
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     const CONFIG_BOTOES = {
         "voltar": "../index.html",
-        "prox": "../champions/champions.html", // Corrigido erro ortográfico de .hmtl para .html
+        "prox": "../champions/champions.html",
         "btn-champions": "../champions/champions.html",
         "btn-falas": "../falas/falas.html",
         "btn-splash-campeoes": "./splash_campeoes.html"
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 filtrados.forEach(campeao => {
                     const item = document.createElement("div");
                     item.className = "sugestao-item";
-                    item.innerHTML = `<img src="${campeao.imagem}" alt="${campeao.nome}" style="object-fit: cover;"> <span>${campeao.nome}</span>`;
+                    item.innerHTML = `<img src="${campeao.imagem}" alt="${campeao.nome}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"> <span>${campeao.nome}</span>`;
                     
                     item.addEventListener("click", () => {
                         inputCampeao.value = campeao.nome;
@@ -177,7 +177,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (btnEnviar) {
-        btnEnviar.addEventListener("click", [...executarEnvio]);
+        // CORRIGIDO: Removido o [...executarEnvio] incorreto
+        btnEnviar.addEventListener("click", executarEnvio); 
     }
 
     function executarEnvio() {

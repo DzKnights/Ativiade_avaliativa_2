@@ -11,8 +11,6 @@
 
 <body>
 
-
-
     <div id="popup-vitoria" class="popup-overlay" style="display: none;">
         <div class="popup-conteudo-vitoria">
             <h2>Parabéns!</h2>
@@ -38,7 +36,6 @@
         </div>
     </div>
 
-    <!-- CAIXA PRINCIPAL: Com os botões internos e largura correta conforme imagem 2 -->
     <div class="caixa-texto">
 
         <button class="menu" id="voltar">VOLTAR</button>
@@ -57,25 +54,26 @@
             Tentativas: 0
         </p>
 
-    <div class="area-busca">
-        <div class="wrapper-input">
-            <input type="text" id="input-campeao" placeholder="Digite o nome do campeão..." autocomplete="off">
+        <div class="container-tentativas-erradas">
+            <h4 class="titulo-tentativas" style="display: none;">SUAS TENTATIVAS</h4>
+            <div id="lista-tentativas-erradas"></div>
+        </div>
+
+        <div class="area-busca">
+            <div class="wrapper-input">
+                <input type="text" id="input-campeao" placeholder="Digite o nome do campeão..." autocomplete="off">
                 <div id="lista-sugestoes" class="sugestoes-box"></div>
-    </div>
+            </div>
             <button id="btn-enviar">➔</button>
-    </div>
-    
+        </div>
+        
     </div>
 
     <audio id="audio-hover" src="../default/hover.mp3" preload="auto"></audio>
     <audio id="audio-click" src="../default/click.mp3" preload="auto"></audio>
 
-    
     <script src="lista_splash.js"></script>
     <script src="splash_campeoes.js"></script>
 
 </body>
-
-</html>
-
 </html>

@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Configuração dos botões do menu superior (Voltar / Próximo)
     const configmenu = {
-        "voltar": "../index/index.html",
+        "voltar": "../index.html",
         "prox": "../falas/falas.html"
     };
 

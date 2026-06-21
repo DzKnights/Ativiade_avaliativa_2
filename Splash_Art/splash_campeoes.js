@@ -42,9 +42,12 @@ document.addEventListener("DOMContentLoaded", () => {
             // Transforma "Kai'Sa" em "kaisa", "Master Yi" em "masteryi" para achar o ícone
             const nomeArquivo = item.campeao.toLowerCase().replace(/['\s]/g, "");
 
+            // CORREÇÃO: Descobre dinamicamente se a extensão da imagem é webp ou jpg
+            const extensao = item.imagem.endsWith(".webp") ? "webp" : "jpg";
+
             LISTA_CAMPEOES_BARRA.push({
                 nome: item.campeao,
-                imagem: `../icone_champions/${nomeArquivo}.jpg` // Caminho para as fotos redondas
+                imagem: `../icone_champions/${nomeArquivo}.${extensao}` // Caminho corrigido para puxar o formato certo
             });
         }
     });
@@ -106,7 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.reload();
         });
     }
-      // Configuração dos botões internos do Pop-up de Vitória
+    
+    // Configuração dos botões internos do Pop-up de Vitória
     const CONFIG_BOTOES_POPUP = {
         "btn-champions": "../champions/champions.html",
         "btn-falas": "../falas/falas.html"

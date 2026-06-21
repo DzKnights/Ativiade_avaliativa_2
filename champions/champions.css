@@ -611,12 +611,9 @@ td img {
     height: 95px;
 }
 
-#btn-champions { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(../index/fundo_camp.jpg); }
-#btn-falas { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(../index/fundo_falas.jpg); background-position: center 25%; }
-#btn-habilidade { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(../index/fundo_habilidade.jpg); background-position: center 50%; }
-#btn-emoji { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(../index/fundo_emoji.jpg); }
-#btn-splash-campeoes { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(../index/fundo_splash_camp.jpg); background-position: center 20%; }
-#btn-splash-itens { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(../index/fundo_splash_itens.jpg); }
+#btn-champions { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_camp.jpg'); }
+#btn-falas { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_falas.jpg'); background-position: center 25%; }
+#btn-splash-campeoes { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_splash_camp.jpg'); background-position: center 20%; }
 
 @keyframes zoomIn {
     from { opacity: 0; transform: scale(0.9); }

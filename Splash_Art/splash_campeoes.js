@@ -241,6 +241,20 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        function processarTentativa(campeaoTentado) {
+        tentativasRealizadas.push(campeaoTentado.nome);
+        inputCampeao.value = "";
+        if (listaSugestoes) listaSugestoes.style.display = "none";
+
+        const totalTentativas = tentativasRealizadas.length;
+        if (txtContador) txtContador.textContent = `Tentativas: ${totalTentativas}`;
+
+        if (totalTentativas > 0 && totalTentativas % 5 === 0) {
+            creditosDicas++;
+            atualizarStatusDicas();
+        }
+
+        const novaLinha = document.createElement("tr");
         // ERROU! (Aplica zoom de afastamento)
         if (splash) {
             switch (tentativas) {

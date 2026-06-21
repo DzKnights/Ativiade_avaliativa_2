@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 6. SISTEMA DE VALIDAÇÃO (VITÓRIA / ZOOMS DE ERRO)
+    // 6. SISTEMA DE VALIDAÇÃO (VITÓRIA / ZOOMS DE ERRO + LISTA VISUAL)
     // ==========================================================================
     function verificarResposta(nomeCampeao) {
         tentativas++;
@@ -219,6 +219,9 @@ document.addEventListener("DOMContentLoaded", () => {
         inputCampeao.value = "";
         const palpite = normalizarTexto(nomeCampeao);
         const alvoCorreto = normalizarTexto(splashAtual.campeao);
+
+        // Busca os dados completos do campeão palpitado (imagem e nome original)
+        const campeaoPalpitado = LISTA_CAMPEOES_BARRA.find(c => normalizarTexto(c.nome) === palpite);
 
         if (palpite === alvoCorreto) {
             // ACERTOU!
@@ -241,7 +244,31 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // ERROU! (Aplica zoom de afastamento)
+        // ERROU! -> Adiciona o card vermelho na lista dinamicamente
+        if (campeaoPalpitado) {
+            const listaErradas = document.getElementById("lista-tentativas-erradas");
+            const tituloTentativas = document.querySelector(".titulo-tentativas");
+            
+            if (listaErradas) {
+                // Ativa a exibição do título "SUAS TENTATIVAS" se for o primeiro erro
+                if (tituloTentativas) tituloTentativas.style.display = "block";
+
+                // Cria o card container vermelho do erro
+                const cardErro = document.createElement("div");
+                cardErro.className = "card-tentativa-erro";
+
+                // Monta a estrutura igual à imagem (imagem centralizada + texto em caixa alta embaixo)
+                cardErro.innerHTML = `
+                    <img src="${campeaoPalpitado.imagem}" alt="${campeaoPalpitado.nome}" onerror="this.src='../default/logo.jpg';">
+                    <span>${campeaoPalpitado.nome.toUpperCase()}</span>
+                `;
+
+                // Adiciona sempre no topo da pilha de erros
+                listaErradas.insertBefore(cardErro, listaErradas.firstChild);
+            }
+        }
+
+        // Aplica zoom de afastamento
         if (splash) {
             switch (tentativas) {
                 case 1: splash.className = "zoom-2"; break;

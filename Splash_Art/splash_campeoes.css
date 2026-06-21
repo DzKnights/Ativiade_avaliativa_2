@@ -720,3 +720,7 @@ td img {
 .revelado{
     transform: scale(1);
 }
+
+#btn-champions { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_camp.jpg'); }
+#btn-falas { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_falas.jpg'); background-position: center 25%; }
+#btn-splash-campeoes { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_splash_camp.jpg'); background-position: center 20%; }

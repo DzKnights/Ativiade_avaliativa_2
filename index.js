@@ -12,10 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const CONFIG_BOTOES = {
         "btn-champions": "champions/champions.html",
         "btn-falas": "falas/falas.html",
-        "btn-habilidade": "habilidade/habilidade.html",
-        "btn-emoji": "emoji/emoji.html",
-        "btn-splash-campeoes": "Splash_Art/splash_campeoes.html",
-        "btn-splash-itens": "splash_itens.html"
+        "btn-splash-campeoes": "Splash_Art/splash_campeoes.html"
     };
 
     // =========================================================

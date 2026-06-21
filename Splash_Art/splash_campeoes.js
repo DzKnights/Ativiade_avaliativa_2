@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let tentativas = 0;
 
     // ==========================================================================
-    // 1. EXTRAÇÃO DE CAMPEÕES ÚNICOS DA LISTA_SPLASH
+    // 1. EXTRAÇÃO DE CAMPEÕES ÚNICOS DA LISTA_SPLASH para a Barra de Pesquisa
     // ==========================================================================
     if (typeof LISTA_SPLASH === 'undefined' || !LISTA_SPLASH || LISTA_SPLASH.length === 0) {
         alert("Erro: O arquivo lista_splash.js não foi carregado corretamente.");
@@ -39,17 +39,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!campeoesAdicionados.has(item.campeao)) {
             campeoesAdicionados.add(item.campeao);
 
+            // Transforma "Kai'Sa" em "kaisa", "Master Yi" em "masteryi" para achar o ícone
             const nomeArquivo = item.campeao.toLowerCase().replace(/['\s]/g, "");
 
             LISTA_CAMPEOES_BARRA.push({
                 nome: item.campeao,
-                imagem: `../icone_champions/${nomeArquivo}.jpg`
+                imagem: `../icone_champions/${nomeArquivo}.jpg` // Caminho para as fotos redondas
             });
         }
     });
 
     // ==========================================================================
-    // 2. SISTEMA DE ÁUDIO
+    // 2. SISTEMA DE ÁUDIO E MAPEAMENTO DE SONS
     // ==========================================================================
     const mapearSonsBotoes = () => {
         const todosBotoes = document.querySelectorAll("button, .menu, .btn-modo-menu, .sugestao-item");
@@ -75,10 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Mapeamento inicial dos botões na tela
     mapearSonsBotoes();
 
     // ==========================================================================
-    // 3. NAVEGAÇÃO DOS BOTÕES
+    // 3. NAVEGAÇÃO DOS BOTÕES SUPERIORES (VOLTAR / PRÓXIMO)
     // ==========================================================================
     const configmenu = {
         "voltar": "../index.html",
@@ -92,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Configuração dos botões internos do Pop-up de Vitória
     const CONFIG_BOTOES_POPUP = {
         "btn-champions": "../champions/champions.html",
         "btn-falas": "../falas/falas.html"
@@ -111,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 4. INICIALIZAÇÃO DA SPLASH ART ALEATÓRIA
+    // 4. INICIALIZAÇÃO DA SPLASH ART ALEATÓRIA DO JOGO
     // ==========================================================================
     const splashAtual = LISTA_SPLASH[Math.floor(Math.random() * LISTA_SPLASH.length)];
     console.log("Splash secreta escolhida:", splashAtual.campeao, "-", splashAtual.skin);
@@ -142,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            // Filtra usando a nossa lista criada unicamente a partir do seu LISTA_SPLASH
             const filtrados = LISTA_CAMPEOES_BARRA.filter(c => 
                 normalizarTexto(c.nome).includes(valorDigitado) && 
                 !tentativasRealizadas.includes(c.nome)
@@ -170,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        // Fecha a caixinha se clicar fora do input
         document.addEventListener("click", (e) => {
             if (e.target !== inputCampeao) {
                 listaSugestoes.style.display = "none";
@@ -204,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 6. SISTEMA DE VALIDAÇÃO (VITÓRIA / ERROS + RENDERIZADOR)
+    // 6. SISTEMA DE VALIDAÇÃO (VITÓRIA / ZOOMS DE ERRO + LISTA VISUAL)
     // ==========================================================================
     function verificarResposta(nomeCampeao) {
         tentativas++;
@@ -215,9 +220,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const palpite = normalizarTexto(nomeCampeao);
         const alvoCorreto = normalizarTexto(splashAtual.campeao);
 
+        // Busca os dados completos do campeão palpitado (imagem e nome original)
         const campeaoPalpitado = LISTA_CAMPEOES_BARRA.find(c => normalizarTexto(c.nome) === palpite);
 
         if (palpite === alvoCorreto) {
+            // ACERTOU!
             if (splash) splash.className = "revelado";
             
             if (popupVitoria) {
@@ -237,26 +244,31 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // SE ERROU: Monta a faixa vermelha vertical
+        // ERROU! -> Adiciona o card vermelho na lista dinamicamente
         if (campeaoPalpitado) {
             const listaErradas = document.getElementById("lista-tentativas-erradas");
             const tituloTentativas = document.querySelector(".titulo-tentativas");
             
             if (listaErradas) {
+                // Ativa a exibição do título "SUAS TENTATIVAS" se for o primeiro erro
                 if (tituloTentativas) tituloTentativas.style.display = "block";
 
+                // Cria o card container vermelho do erro
                 const cardErro = document.createElement("div");
                 cardErro.className = "card-tentativa-erro";
 
+                // Monta a estrutura igual à imagem (imagem centralizada + texto em caixa alta embaixo)
                 cardErro.innerHTML = `
                     <img src="${campeaoPalpitado.imagem}" alt="${campeaoPalpitado.nome}" onerror="this.src='../default/logo.jpg';">
                     <span>${campeaoPalpitado.nome.toUpperCase()}</span>
                 `;
 
+                // Adiciona sempre no topo da pilha de erros
                 listaErradas.insertBefore(cardErro, listaErradas.firstChild);
             }
         }
 
+        // Aplica zoom de afastamento
         if (splash) {
             switch (tentativas) {
                 case 1: splash.className = "zoom-2"; break;

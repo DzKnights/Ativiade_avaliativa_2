@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     const configmenu = {
         "voltar": "../index.html",
-        "prox": "../falas/falas.html"
+        "prox": "../champions/champions.html"
     };
 
     document.querySelectorAll(".menu").forEach(botao => {

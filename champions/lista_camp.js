@@ -1,9 +1,9 @@
 // Cadastro Geral de Campeões - Linha do Tempo Completa (2009 - 2025)
 const LISTA_CAMPEOES = [
     // === LETRA A ===
-    { nome: "Aatrox", imagem: "../icone_champions/aatrox.jpg", genero: "Homem", posicao: "Topo", classe: "Lutador", recurso: "Sem Mana", alcance: "Corpo-a-Corpo", regiao: "Runeterra, Shurima", ano: 2013 },
-    { nome: "Ahri", imagem: "../icone_champions/ahri.jpg", genero: "Mulher", posicao: "Meio", classe: "Mago, Assassino", recurso: "Mana", alcance: "Longo Alcance", regiao: "Ionia", ano: 2011 },
-    { nome: "Akali", imagem: "../icone_champions/akali.jpg", genero: "Mulher", posicao: "Topo, Meio", classe: "Assassino", recurso: "Energia", alcance: "Corpo-a-Corpo", regiao: "Ionia", ano: 2010 },
+    { nome: "Aatrox", imagem: 'icone_champions/aatrox.jpg', genero: "Homem", posicao: "Topo", classe: "Lutador", recurso: "Sem Mana", alcance: "Corpo-a-Corpo", regiao: "Runeterra, Shurima", ano: 2013 },
+    { nome: "Ahri", imagem: 'icone_champions/ahri.jpg', genero: "Mulher", posicao: "Meio", classe: "Mago, Assassino", recurso: "Mana", alcance: "Longo Alcance", regiao: "Ionia", ano: 2011 },
+    { nome: "Akali", imagem: "icone_champions/akali.jpg", genero: "Mulher", posicao: "Topo, Meio", classe: "Assassino", recurso: "Energia", alcance: "Corpo-a-Corpo", regiao: "Ionia", ano: 2010 },
     { nome: "Akshan", imagem: "../icone_champions/akshan.jpg", genero: "Homem", posicao: "Meio, Topo", classe: "Atirador, Assassino", recurso: "Mana", alcance: "Longo Alcance", regiao: "Shurima", ano: 2021 },
     { nome: "Alistar", imagem: "../icone_champions/alistar.jpg", genero: "Homem", posicao: "Suporte", classe: "Tank, Suporte", recurso: "Mana", alcance: "Corpo-a-Corpo", regiao: "Runeterra", ano: 2009 },
     { nome: "Amumu", imagem: "../icone_champions/amumu.jpg", genero: "Homem", posicao: "Caçador, Suporte", classe: "Tank", recurso: "Mana", alcance: "Corpo-a-Corpo", regiao: "Shurima", ano: 2009 },

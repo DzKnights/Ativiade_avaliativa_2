@@ -25,23 +25,27 @@ document.addEventListener("DOMContentLoaded", () => {
     let tentativas = 0;
 
     // ==========================================================================
-    // GERADOR DINÂMICO DE CAMPEÕES (Garante o funcionamento do Autocomplete)
+    // GERADOR DINÂMICO DE CAMPEÕES (Mapeia para a pasta correta de ícones)
     // ==========================================================================
     if (typeof LISTA_SPLASH === 'undefined' || !LISTA_SPLASH || LISTA_SPLASH.length === 0) {
         alert("Erro: LISTA_SPLASH não foi carregada corretamente.");
         return;
     }
 
-    // Cria a lista de Campeões únicos extraindo a primeira splash de cada um como ícone
     const LISTA_CAMPEOES = [];
     const campeoesAdicionados = new Set();
 
     LISTA_SPLASH.forEach(item => {
         if (!campeoesAdicionados.has(item.campeao)) {
             campeoesAdicionados.add(item.campeao);
+
+            // Padroniza o nome para o arquivo (Remove aspas simples, espaços e joga tudo para minúsculo)
+            // Exemplo: "Kai'Sa" vira "kaisa", "Master Yi" vira "masteryi"
+            const nomeArquivo = item.campeao.toLowerCase().replace(/['\s]/g, "");
+
             LISTA_CAMPEOES.push({
                 nome: item.campeao,
-                imagem: item.imagem // Usa a splash correspondente como miniatura no autocomplete
+                imagem: `../icone_champions/${nomeArquivo}.jpg` // Caminho corrigido apontando para os ícones
             });
         }
     });
@@ -86,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "btn-splash-campeoes": "./splash_campeoes.html"
     };
 
-    // Aplica o evento de clique em todos os botões de menu e de modos
     document.querySelectorAll(".menu, .btn-modo-menu").forEach(botao => {
         botao.addEventListener("click", () => {
             const destino = CONFIG_BOTOES[botao.id];
@@ -136,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Filtra os campeões com base no texto digitado
             const filtrados = LISTA_CAMPEOES.filter(c => 
                 normalizarTexto(c.nome).includes(valorDigitado) && 
                 !tentativasRealizadas.includes(c.nome)
@@ -158,13 +160,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     listaSugestoes.appendChild(item);
                 });
                 listaSugestoes.style.display = "block";
-                mapearSonsBotoes(); // Atribui efeitos sonoros às sugestões dinâmicas
+                mapearSonsBotoes(); 
             } else {
                 listaSugestoes.style.display = "none";
             }
         });
 
-        // Oculta a caixa de sugestões caso o usuário clique fora dela
         document.addEventListener("click", (e) => {
             if (e.target !== inputCampeao) {
                 listaSugestoes.style.display = "none";
@@ -177,7 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (btnEnviar) {
-        // CORRIGIDO: Removido o [...executarEnvio] incorreto
         btnEnviar.addEventListener("click", executarEnvio); 
     }
 
@@ -211,17 +211,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const alvoCorreto = normalizarTexto(splashAtual.campeao);
 
         if (palpite === alvoCorreto) {
-            // ACERTOU!
             splash.className = "revelado";
             
-            // Popula os dados do Pop-up de vitória estruturado no HTML
             if (popupVitoria) {
                 popupVitoriaImg.src = splashAtual.imagem;
                 popupVitoriaNome.textContent = `${splashAtual.campeao} - ${splashAtual.skin}`;
                 
                 const elementoStrong = popupVitoriaTentativas.querySelector("strong");
                 if (elementoStrong) {
-                    elementoStrong.textContent = tentativas;
+                    elementoStrong.textContent = parseInt(tentativas);
                 } else {
                     popupVitoriaTentativas.innerHTML = `Tentativas: <strong>${tentativas}</strong>`;
                 }
@@ -236,7 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // ERROU! Diminui progressivamente o zoom usando os estados do CSS
         switch (tentativas) {
             case 1:
                 splash.className = "zoom-2";
@@ -248,7 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 splash.className = "zoom-4";
                 break;
             default:
-                // Limite de erros atingido (Derrota)
                 splash.className = "revelado";
                 setTimeout(() => {
                     alert(`Fim de jogo!\n\nO campeão correto era: ${splashAtual.campeao}\nSkin: ${splashAtual.skin}`);

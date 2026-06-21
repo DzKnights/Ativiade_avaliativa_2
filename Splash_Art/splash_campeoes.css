@@ -172,22 +172,7 @@ h3 {
     border-radius: 6px;
 }
 
-#btn-enviar {
-    background-color: #583774;
-    border: 1px solid yellow;
-    color: white;
-    font-size: 1.2rem;
-    padding: 0 20px;
-    border-radius: 8px;
-    cursor: url('../default/cursor_hover.png') 50 50, pointer;
-    transition: background 0.2s, transform 0.1s;
-}
 
-#btn-enviar:hover {
-    background-color: orange;
-    color: black;
-    transform: scale(1.05);
-}
 
 /* ==========================================================================
    3. SISTEMA DE REVELAÇÃO DE DICAS (MODULADO POR ESTADOS DE CORES)

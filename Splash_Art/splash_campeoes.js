@@ -1,40 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Mapeamento correto dos elementos do DOM
     const splash = document.getElementById("splash-img");
-    const input = document.getElementById("input-campeao");
-    const btn = document.getElementById("btn-enviar");
+    const inputCampeao = document.getElementById("input-campeao");
+    const btnEnviar = document.getElementById("btn-enviar");
     const contador = document.getElementById("contador-tentativas");
+    const listaSugestoes = document.getElementById("lista-sugestoes");
+    
+    // Pop-up de Vitória
+    const popupVitoria = document.getElementById("popup-vitoria");
+    const popupVitoriaImg = document.getElementById("popup-vitoria-img");
+    const popupVitoriaNome = document.getElementById("popup-vitoria-nome-campeao");
+    const popupVitoriaTentativas = document.getElementById("popup-vitoria-tentativas");
+    const btnReiniciar = document.getElementById("popup-reiniciar");
 
-     // Efeitos sonoros
+    // Efeitos sonoros
     const audioHover = document.getElementById("audio-hover");
     const audioClick = document.getElementById("audio-click");
     
     // Variáveis de controle de estado interno
     let tentativasRealizadas = [];
-    let creditosDicas = 0; 
+    let tentativas = 0;
 
     // ==========================================================================
-    // 1. CONTROLADOR DE DESBLOQUEIO DE REPRODUÇÃO DE ÁUDIO
+    // 1. SISTEMA DE ÁUDIO E HOVER
     // ==========================================================================
-    if (btnIniciarJogo) {
-        btnIniciarJogo.addEventListener("click", () => {
-            if (audioHover && audioClick) {
-                // Triggers simulados para obter autorização de áudio do browser
-                audioHover.play().then(() => { audioHover.pause(); audioHover.currentTime = 0; }).catch(() => {});
-                audioClick.play().then(() => { audioClick.pause(); audioClick.currentTime = 0; }).catch(() => {});
-            }
-            if (popupInicio) popupInicio.style.display = "none";
-        });
-    }
-
-    // Mapeia listeners dinamicamente para aplicar efeitos de áudio em elementos interativos
     const mapearSonsBotoes = () => {
-        const todosBotoes = document.querySelectorAll("button, .menu, .dica-card.disponivel");
-
+        const todosBotoes = document.querySelectorAll("button, .menu, .btn-modo-menu, .sugestao-item");
         todosBotoes.forEach(botao => {
             botao.removeEventListener("mouseenter", tocarHover);
             botao.removeEventListener("click", tocarClick);
-
             botao.addEventListener("mouseenter", tocarHover);
             botao.addEventListener("click", tocarClick);
         });
@@ -54,36 +49,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Execução primária para componentes estáticos da tela
     mapearSonsBotoes();
 
     // ==========================================================================
-    // 2. SISTEMA DE REFRESH E NAVEGAÇÃO ENTRE PÁGINAS (BOTÕES DO POP-UP)
+    // 2. NAVEGAÇÃO (VOLTAR, PRÓXIMO E POP-UP)
     // ==========================================================================
-    document.querySelectorAll(".btn-modo-menu").forEach(botao => {
-        botao.addEventListener('mouseenter', () => {
-            if (audioHover) { audioHover.currentTime = 0; audioHover.play().catch(() => {}); }
-        });
-
-        botao.addEventListener('click', () => {
-            if (audioClick) { audioClick.currentTime = 0; audioClick.play().catch(() => {}); }
-            const paginaDestino = CONFIG_BOTOES_POPUP[botao.id];
-            if (paginaDestino) {
-                setTimeout(() => { window.location.href = paginaDestino; }, 400);
-            }
-        });
-    });
-
-    // CONFIGURAÇÃO DOS LINKS DE REDIRECIONAMENTO DOS MODOS
-    const CONFIG_BOTOES_POPUP = {
+    const CONFIG_BOTOES = {
+        "voltar": "../index.html",
+        "prox": "../champions/champions.html", // Corrigido de .hmtl para .html
         "btn-falas": "../falas/falas.html",
-        "btn-champions": "../champions/champions.html"
+        "btn-champions": "../champions/champions.html",
+        "btn-splash-campeoes": "./splash_campeoes.html"
     };
 
-    document.querySelectorAll(".menu").forEach(botao => {
+    // Funcionalidade para os botões do Menu (Voltar/Próximo) e Pop-up
+    document.querySelectorAll(".menu, .btn-modo-menu").forEach(botao => {
         botao.addEventListener("click", () => {
-            const destino = configmenu[botao.id];
-            if (destino) window.location.href = destino;
+            const destino = CONFIG_BOTOES[botao.id];
+            if (destino) {
+                setTimeout(() => {
+                    window.location.href = destino;
+                }, 300);
+            }
         });
     });
 
@@ -93,12 +80,37 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ==========================================================================
+    // 3. LOGICA DO JOGO (SPLASH ART)
+    // ==========================================================================
+    if (!LISTA_SPLASH || LISTA_SPLASH.length === 0) {
+        alert("Erro: LISTA_SPLASH não foi carregada.");
+        return;
+    }
+    
+    if (!LISTA_CAMPEOES || LISTA_CAMPEOES.length === 0) {
+        alert("Erro: LISTA_CAMPEOES não foi carregada.");
+        return;
+    }
+
+    // Escolhe uma splash aleatória
+    const splashAtual = LISTA_SPLASH[Math.floor(Math.random() * LISTA_SPLASH.length)];
+    console.log("Splash escolhida:", splashAtual);
+
+    // Carrega imagem e define Zoom Inicial
+    if (splash) {
+        splash.src = splashAtual.imagem;
+        splash.className = "zoom-1";
+        const posX = Math.floor(Math.random() * 100);
+        const posY = Math.floor(Math.random() * 100);
+        splash.style.objectPosition = `${posX}% ${posY}%`;
+    }
 
     // ==========================================================================
-    // 4. MECÂNICA DE AUTOCOMPLETE E TRATAMENTO DE TEXTO (STRING)
+    // 4. AUTOCOMPLETE E VALIDAÇÃO DA RESPOSTA
     // ==========================================================================
     const normalizarTexto = (texto) => {
-    if (!texto) return "";
+        if (!texto) return "";
         return texto.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     };
 
@@ -127,17 +139,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         inputCampeao.value = campeao.nome;
                         listaSugestoes.innerHTML = "";
                         listaSugestoes.style.display = "none";
-                        processarTentativa(campeao);
+                        verificarResposta(campeao.nome);
                     });
                     
                     listaSugestoes.appendChild(item);
                 });
                 listaSugestoes.style.display = "block";
+                mapearSonsBotoes(); // Atualiza sons para novos itens criados
             } else {
                 listaSugestoes.style.display = "none";
             }
         });
 
+        // Fecha a lista ao clicar fora
         document.addEventListener("click", (e) => {
             if (e.target !== inputCampeao) {
                 listaSugestoes.style.display = "none";
@@ -154,118 +168,74 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function executarEnvio() {
-        const nomeDigitado = normalizarTexto(inputCampeao.value);
-        const campeaoEncontrado = LISTA_CAMPEOES.find(c => normalizarTexto(c.nome) === nomeDigitado);
+        const nomeDigitado = inputCampeao.value.trim();
+        if (nomeDigitado === "") return;
+
+        const campeaoEncontrado = LISTA_CAMPEOES.find(c => normalizarTexto(c.nome) === normalizarTexto(nomeDigitado));
 
         if (campeaoEncontrado) {
             if (!tentativasRealizadas.includes(campeaoEncontrado.nome)) {
-                processarTentativa(campeaoEncontrado);
+                verificarResposta(campeaoEncontrado.nome);
             } else {
                 alert("Você já tentou esse campeão!");
                 inputCampeao.value = "";
             }
-        } else if (inputCampeao.value.trim() !== "") {
-            alert("Campeão não encontrado.");
+        } else {
+            alert("Campeão não encontrado. Escolha uma das opções da lista!");
         }
     }
-    
-    // Verifica se a lista carregou
-    if (!LISTA_SPLASH || LISTA_SPLASH.length === 0) {
-        alert("Erro: LISTA_SPLASH não foi carregada.");
-        return;
-    }
 
-    // Configuração dos botões do menu superior (Voltar / Próximo)
-    const configmenu = {
-        "voltar": "../index.html",
-        "prox": "../champions/champions.hmtl"
-    };
-    
-    // Escolhe uma splash aleatória
-    const splashAtual =
-        LISTA_SPLASH[Math.floor(Math.random() * LISTA_SPLASH.length)];
-
-    console.log("Splash escolhida:", splashAtual);
-
-    // Carrega imagem
-    splash.src = splashAtual.imagem;
-
-    // Zoom inicial
-    splash.className = "zoom-1";
-
-    // Ponto aleatório da splash
-    const posX = Math.floor(Math.random() * 100);
-    const posY = Math.floor(Math.random() * 100);
-
-    splash.style.objectPosition = `${posX}% ${posY}%`;
-
-    let tentativas = 0;
-
-    function verificarResposta() {
-
-        const resposta =
-            input.value.trim().toLowerCase();
-
-        if (resposta === "") return;
-
+    function verificarResposta(nomeCampeao) {
         tentativas++;
+        tentativasRealizadas.push(nomeCampeao);
+        contador.textContent = `Tentativas: ${tentativas}`;
+        
+        const respostaFormatada = normalizarTexto(nomeCampeao);
+        const respostaCorreta = normalizarTexto(splashAtual.campeao);
 
-        contador.textContent =
-            `Tentativas: ${tentativas}`;
-
-        if (
-            resposta ===
-            splashAtual.campeao.toLowerCase()
-        ) {
-
+        if (respostaFormatada === respostaCorreta) {
+            // Vitória!
             splash.className = "revelado";
-
-            setTimeout(() => {
-                alert(
-                    `Parabéns!\n\nCampeão: ${splashAtual.campeao}\nSkin: ${splashAtual.skin}`
-                );
-            }, 300);
-
+            
+            // Preenche e exibe o Pop-up de vitória estruturado no seu HTML
+            if (popupVitoria) {
+                popupVitoriaImg.src = splashAtual.imagem;
+                popupVitoriaNome.textContent = `${splashAtual.campeao} (${splashAtual.skin})`;
+                popupVitoriaTentativas.innerHTML = `Tentativas: <strong>${tentativas}</strong>`;
+                
+                setTimeout(() => {
+                    popupVitoria.style.display = "flex";
+                }, 400);
+            }
+            
+            btnEnviar.disabled = true;
+            inputCampeao.disabled = true;
             return;
         }
 
+        // Se errar, muda o nível do zoom com base nas suas classes CSS
         switch (tentativas) {
-
             case 1:
                 splash.className = "zoom-2";
                 break;
-
             case 2:
                 splash.className = "zoom-3";
                 break;
-
             case 3:
                 splash.className = "zoom-4";
                 break;
-
             default:
-
+                // Derrota / Fim de jogo
                 splash.className = "revelado";
-
                 setTimeout(() => {
-                    alert(
-                        `Fim de jogo!\n\nEra ${splashAtual.campeao}\nSkin: ${splashAtual.skin}`
-                    );
-                }, 300);
+                    alert(`Fim de jogo!\n\nEra ${splashAtual.campeao}\nSkin: ${splashAtual.skin}`);
+                    window.location.reload();
+                }, 500);
 
-                btn.disabled = true;
-                input.disabled = true;
+                btnEnviar.disabled = true;
+                inputCampeao.disabled = true;
         }
 
-        input.value = "";
+        inputCampeao.value = "";
     }
-
-    btn.addEventListener("click", verificarResposta);
-
-    input.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            verificarResposta();
-        }
-    });
-
 });

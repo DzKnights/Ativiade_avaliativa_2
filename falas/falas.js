@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const CONFIG_BOTOES_POPUP = {
         "btn-champions": "../champions/champions.html",
-        "btn-falas": "falas.html",
         "btn-splash-campeoes": "../splash_campeoes/splash_campeoes.html"
     };
 

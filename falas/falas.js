@@ -36,10 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const CONFIG_BOTOES_POPUP = {
         "btn-champions": "../champions/champions.html",
         "btn-falas": "falas.html",
-        "btn-habilidade": "../habilidade/habilidade.html",
-        "btn-emoji": "../emoji/emoji.html",
-        "btn-splash-campeoes": "../splash_campeoes/splash_campeoes.html",
-        "btn-splash-itens": "../splash_itens/splash_itens.html"
+        "btn-splash-campeoes": "../splash_campeoes/splash_campeoes.html"
     };
 
     let tentativasRealizadas = [];

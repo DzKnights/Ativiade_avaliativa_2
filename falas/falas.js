@@ -127,8 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const configMenuSuperior = {
-        "voltar": "../index/index.html",
-        "prox": "../habilidade/habilidade.html"
+        "voltar": "../index.html",
+        "prox": "../splashArt/splash_campeoes.html"
     };
 
     document.querySelectorAll(".menu").forEach(botao => {

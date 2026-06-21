@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    // Configuração dos botões do menu superior (Voltar / Próximo)
+    const configmenu = {
+        "voltar": "../index.html",
+        "prox": "../champions/champions.hmtl"
+    };
+    
     // Escolhe uma splash aleatória
     const splashAtual =
         LISTA_SPLASH[Math.floor(Math.random() * LISTA_SPLASH.length)];

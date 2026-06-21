@@ -97,8 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Configuração dos botões internos do Pop-up de Vitória
     const CONFIG_BOTOES_POPUP = {
         "btn-champions": "../champions/champions.html",
-        "btn-falas": "../falas/falas.html",
-        "btn-splash-campeoes": "./splash_campeoes.html"
+        "btn-falas": "../falas/falas.html"
     };
 
     document.querySelectorAll(".btn-modo-menu").forEach(botao => {

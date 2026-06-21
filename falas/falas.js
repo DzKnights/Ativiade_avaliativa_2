@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const CONFIG_BOTOES_POPUP = {
         "btn-champions": "../champions/champions.html",
-        "btn-splash-campeoes": "../splash_campeoes/splash_campeoes.html"
+        "btn-splash-campeoes": "../Splash_Art/splash_campeoes.html"
     };
 
     let tentativasRealizadas = [];
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const configMenuSuperior = {
         "voltar": "../index.html",
-        "prox": "../splashArt/splash_campeoes.html"
+        "prox": "../Splash_Art/splash_campeoes.html"
     };
 
     document.querySelectorAll(".menu").forEach(botao => {

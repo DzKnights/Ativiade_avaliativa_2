@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz of Legends - Splash Art</title>
+    <title>LOLdle - Splash Art</title>
     <link rel="icon" href="default/logo.jpg" type="image/jpeg">
     <link rel="stylesheet" href="splash_campeoes.css">
 </head>
 
 <body>
+
+
 
     <div id="popup-vitoria" class="popup-overlay" style="display: none;">
         <div class="popup-conteudo-vitoria">
@@ -36,7 +38,7 @@
         </div>
     </div>
 
-    <!-- CAIXA PRINCIPAL -->
+    <!-- CAIXA PRINCIPAL: Com os botões internos e largura correta conforme imagem 2 -->
     <div class="caixa-texto">
 
         <button class="menu" id="voltar">VOLTAR</button>
@@ -62,8 +64,6 @@
             </div>
             <button id="btn-enviar">➔</button>
         </div>
-
-        <!-- CONTAINER DO HISTÓRICO ADICIONADO AQUI -->
         <div id="container-historico" style="margin-top: 25px;">
             <p class="titulo-tentativas" style="font-weight: bold; color: #fff; text-align: center; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-size: 14px;">Suas Tentativas</p>
             <div id="historico-tentativas" style="display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; padding-right: 5px;"></div>
@@ -74,10 +74,12 @@
     <audio id="audio-hover" src="../default/hover.mp3" preload="auto"></audio>
     <audio id="audio-click" src="../default/click.mp3" preload="auto"></audio>
 
-    <!-- Mantidos os nomes originais em minúsculo para evitar o erro de carregamento -->
     <script src="lista_camp.js"></script>
     <script src="lista_splash.js"></script>
     <script src="splash_campeoes.js"></script>
 
 </body>
+
+</html>
+
 </html>

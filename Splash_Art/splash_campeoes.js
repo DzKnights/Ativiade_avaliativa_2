@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Mapeamento correto dos elementos do DOM
+    // ==========================================================================
+    // MAPEAMENTO DOS ELEMENTOS DO DOM
+    // ==========================================================================
     const splash = document.getElementById("splash-img");
     const inputCampeao = document.getElementById("input-campeao");
     const btnEnviar = document.getElementById("btn-enviar");
@@ -23,7 +25,29 @@ document.addEventListener("DOMContentLoaded", () => {
     let tentativas = 0;
 
     // ==========================================================================
-    // 1. SISTEMA DE ÁUDIO E HOVER
+    // GERADOR DINÂMICO DE CAMPEÕES (Garante o funcionamento do Autocomplete)
+    // ==========================================================================
+    if (!LISTA_SPLASH || LISTA_SPLASH.length === 0) {
+        alert("Erro: LISTA_SPLASH não foi carregada corretamente.");
+        return;
+    }
+
+    // Cria a lista de Campeões únicos extraindo a primeira splash de cada um como ícone
+    const LISTA_CAMPEOES = [];
+    const campeoesAdicionados = new Set();
+
+    LISTA_SPLASH.forEach(item => {
+        if (!campeoesAdicionados.has(item.campeao)) {
+            campeoesAdicionados.add(item.campeao);
+            LISTA_CAMPEOES.push({
+                nome: item.campeao,
+                imagem: item.imagem // Usa a splash correspondente como miniatura no autocomplete
+            });
+        }
+    });
+
+    // ==========================================================================
+    // SISTEMA DE ÁUDIO E HOVER
     // ==========================================================================
     const mapearSonsBotoes = () => {
         const todosBotoes = document.querySelectorAll("button, .menu, .btn-modo-menu, .sugestao-item");
@@ -52,17 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
     mapearSonsBotoes();
 
     // ==========================================================================
-    // 2. NAVEGAÇÃO (VOLTAR, PRÓXIMO E POP-UP)
+    // NAVEGAÇÃO DOS BOTÕES (VOLTAR, PRÓXIMO E POP-UP)
     // ==========================================================================
     const CONFIG_BOTOES = {
         "voltar": "../index.html",
-        "prox": "../champions/champions.html", // Corrigido de .hmtl para .html
-        "btn-falas": "../falas/falas.html",
+        "prox": "../champions/champions.html", // Corrigido erro ortográfico de .hmtl para .html
         "btn-champions": "../champions/champions.html",
+        "btn-falas": "../falas/falas.html",
         "btn-splash-campeoes": "./splash_campeoes.html"
     };
 
-    // Funcionalidade para os botões do Menu (Voltar/Próximo) e Pop-up
+    // Aplica o evento de clique em todos os botões de menu e de modos
     document.querySelectorAll(".menu, .btn-modo-menu").forEach(botao => {
         botao.addEventListener("click", () => {
             const destino = CONFIG_BOTOES[botao.id];
@@ -81,23 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 3. LOGICA DO JOGO (SPLASH ART)
+    // INICIALIZAÇÃO DA SPLASH ART ALEATÓRIA
     // ==========================================================================
-    if (!LISTA_SPLASH || LISTA_SPLASH.length === 0) {
-        alert("Erro: LISTA_SPLASH não foi carregada.");
-        return;
-    }
-    
-    if (!LISTA_CAMPEOES || LISTA_CAMPEOES.length === 0) {
-        alert("Erro: LISTA_CAMPEOES não foi carregada.");
-        return;
-    }
-
-    // Escolhe uma splash aleatória
     const splashAtual = LISTA_SPLASH[Math.floor(Math.random() * LISTA_SPLASH.length)];
-    console.log("Splash escolhida:", splashAtual);
+    console.log("Splash escolhida para adivinhar:", splashAtual);
 
-    // Carrega imagem e define Zoom Inicial
     if (splash) {
         splash.src = splashAtual.imagem;
         splash.className = "zoom-1";
@@ -107,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 4. AUTOCOMPLETE E VALIDAÇÃO DA RESPOSTA
+    // AUTOCOMPLETE E MECÂNICA DE ADIVINHAÇÃO
     // ==========================================================================
     const normalizarTexto = (texto) => {
         if (!texto) return "";
@@ -124,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            // Filtra os campeões com base no texto digitado
             const filtrados = LISTA_CAMPEOES.filter(c => 
                 normalizarTexto(c.nome).includes(valorDigitado) && 
                 !tentativasRealizadas.includes(c.nome)
@@ -133,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 filtrados.forEach(campeao => {
                     const item = document.createElement("div");
                     item.className = "sugestao-item";
-                    item.innerHTML = `<img src="${campeao.imagem}" alt="${campeao.nome}"> <span>${campeao.nome}</span>`;
+                    item.innerHTML = `<img src="${campeao.imagem}" alt="${campeao.nome}" style="object-fit: cover;"> <span>${campeao.nome}</span>`;
                     
                     item.addEventListener("click", () => {
                         inputCampeao.value = campeao.nome;
@@ -145,13 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     listaSugestoes.appendChild(item);
                 });
                 listaSugestoes.style.display = "block";
-                mapearSonsBotoes(); // Atualiza sons para novos itens criados
+                mapearSonsBotoes(); // Atribui efeitos sonoros às sugestões dinâmicas
             } else {
                 listaSugestoes.style.display = "none";
             }
         });
 
-        // Fecha a lista ao clicar fora
+        // Oculta a caixa de sugestões caso o usuário clique fora dela
         document.addEventListener("click", (e) => {
             if (e.target !== inputCampeao) {
                 listaSugestoes.style.display = "none";
@@ -164,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (btnEnviar) {
-        btnEnviar.addEventListener("click", executarEnvio);
+        btnEnviar.addEventListener("click", [...executarEnvio]);
     }
 
     function executarEnvio() {
@@ -181,27 +194,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 inputCampeao.value = "";
             }
         } else {
-            alert("Campeão não encontrado. Escolha uma das opções da lista!");
+            alert("Campeão inválido ou não encontrado. Selecione uma opção válida da lista!");
         }
     }
 
+    // ==========================================================================
+    // SISTEMA DE VERIFICAÇÃO E REVELAÇÃO (VITÓRIA / DERROTA)
+    // ==========================================================================
     function verificarResposta(nomeCampeao) {
         tentativas++;
         tentativasRealizadas.push(nomeCampeao);
         contador.textContent = `Tentativas: ${tentativas}`;
         
-        const respostaFormatada = normalizarTexto(nomeCampeao);
-        const respostaCorreta = normalizarTexto(splashAtual.campeao);
+        const palpite = normalizarTexto(nomeCampeao);
+        const alvoCorreto = normalizarTexto(splashAtual.campeao);
 
-        if (respostaFormatada === respostaCorreta) {
-            // Vitória!
+        if (palpite === alvoCorreto) {
+            // ACERTOU!
             splash.className = "revelado";
             
-            // Preenche e exibe o Pop-up de vitória estruturado no seu HTML
+            // Popula os dados do Pop-up de vitória estruturado no HTML
             if (popupVitoria) {
                 popupVitoriaImg.src = splashAtual.imagem;
-                popupVitoriaNome.textContent = `${splashAtual.campeao} (${splashAtual.skin})`;
-                popupVitoriaTentativas.innerHTML = `Tentativas: <strong>${tentativas}</strong>`;
+                popupVitoriaNome.textContent = `${splashAtual.campeao} - ${splashAtual.skin}`;
+                
+                const elementoStrong = popupVitoriaTentativas.querySelector("strong");
+                if (elementoStrong) {
+                    elementoStrong.textContent = tentativas;
+                } else {
+                    popupVitoriaTentativas.innerHTML = `Tentativas: <strong>${tentativas}</strong>`;
+                }
                 
                 setTimeout(() => {
                     popupVitoria.style.display = "flex";
@@ -213,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Se errar, muda o nível do zoom com base nas suas classes CSS
+        // ERROU! Diminui progressivamente o zoom usando os estados do CSS
         switch (tentativas) {
             case 1:
                 splash.className = "zoom-2";
@@ -225,10 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 splash.className = "zoom-4";
                 break;
             default:
-                // Derrota / Fim de jogo
+                // Limite de erros atingido (Derrota)
                 splash.className = "revelado";
                 setTimeout(() => {
-                    alert(`Fim de jogo!\n\nEra ${splashAtual.campeao}\nSkin: ${splashAtual.skin}`);
+                    alert(`Fim de jogo!\n\nO campeão correto era: ${splashAtual.campeao}\nSkin: ${splashAtual.skin}`);
                     window.location.reload();
                 }, 500);
 

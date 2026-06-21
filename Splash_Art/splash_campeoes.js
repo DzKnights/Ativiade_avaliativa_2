@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================================================
-    // MAPEAMENTO DOS ELEMENTOS DO DOM (Baseado exatamente no seu HTML)
+    // MAPEAMENTO DOS ELEMENTOS DO DOM
     // ==========================================================================
     const splash = document.getElementById("splash-img");
     const inputCampeao = document.getElementById("input-campeao");
@@ -25,19 +25,32 @@ document.addEventListener("DOMContentLoaded", () => {
     let tentativas = 0;
 
     // ==========================================================================
-    // VALIDAÇÃO DOS ARQUIVOS DE DADOS EXTERNOS
+    // 1. EXTRAÇÃO DE CAMPEÕES ÚNICOS DA LISTA_SPLASH para a Barra de Pesquisa
     // ==========================================================================
-    if (typeof LISTA_SPLASH === 'undefined' || LISTA_SPLASH.length === 0) {
-        alert("Erro: lista_splash.js não foi carregado corretamente.");
-        return;
-    }
-    if (typeof LISTA_CAMPEOES === 'undefined' || LISTA_CAMPEOES.length === 0) {
-        alert("Erro: lista_camp.js não foi carregado corretamente.");
+    if (typeof LISTA_SPLASH === 'undefined' || !LISTA_SPLASH || LISTA_SPLASH.length === 0) {
+        alert("Erro: O arquivo lista_splash.js não foi carregado corretamente.");
         return;
     }
 
+    const LISTA_CAMPEOES_BARRA = [];
+    const campeoesAdicionados = new Set();
+
+    LISTA_SPLASH.forEach(item => {
+        if (!campeoesAdicionados.has(item.campeao)) {
+            campeoesAdicionados.add(item.campeao);
+
+            // Transforma "Kai'Sa" em "kaisa", "Master Yi" em "masteryi" para achar o ícone
+            const nomeArquivo = item.campeao.toLowerCase().replace(/['\s]/g, "");
+
+            LISTA_CAMPEOES_BARRA.push({
+                nome: item.campeao,
+                imagem: `../icone_champions/${nomeArquivo}.jpg` // Caminho para as fotos redondas
+            });
+        }
+    });
+
     // ==========================================================================
-    // SISTEMA DE ÁUDIO E MAPEAMENTO DE SONS
+    // 2. SISTEMA DE ÁUDIO E MAPEAMENTO DE SONS
     // ==========================================================================
     const mapearSonsBotoes = () => {
         const todosBotoes = document.querySelectorAll("button, .menu, .btn-modo-menu, .sugestao-item");
@@ -63,11 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Execução inicial para os componentes estáticos do HTML
+    // Mapeamento inicial dos botões na tela
     mapearSonsBotoes();
 
     // ==========================================================================
-    // NAVEGAÇÃO DOS BOTÕES SUPERIORES (VOLTAR / PRÓXIMO)
+    // 3. NAVEGAÇÃO DOS BOTÕES SUPERIORES (VOLTAR / PRÓXIMO)
     // ==========================================================================
     const configmenu = {
         "voltar": "../index.html",
@@ -81,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Configuração dos botões de redirecionamento internos do Pop-up de Vitória
+    // Configuração dos botões internos do Pop-up de Vitória
     const CONFIG_BOTOES_POPUP = {
         "btn-champions": "../champions/champions.html",
         "btn-falas": "../falas/falas.html",
@@ -102,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // INICIALIZAÇÃO DA SPLASH ART ALEATÓRIA
+    // 4. INICIALIZAÇÃO DA SPLASH ART ALEATÓRIA DO JOGO
     // ==========================================================================
     const splashAtual = LISTA_SPLASH[Math.floor(Math.random() * LISTA_SPLASH.length)];
     console.log("Splash secreta escolhida:", splashAtual.campeao, "-", splashAtual.skin);
@@ -116,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // AUTOCOMPLETE (BARRA DE PESQUISA)
+    // 5. AUTOCOMPLETE (BARRA DE PESQUISA)
     // ==========================================================================
     const normalizarTexto = (texto) => {
         if (!texto) return "";
@@ -133,8 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Filtra os campeões vindos do seu lista_camp.js original
-            const filtrados = LISTA_CAMPEOES.filter(c => 
+            // Filtra usando a nossa lista criada unicamente a partir do seu LISTA_SPLASH
+            const filtrados = LISTA_CAMPEOES_BARRA.filter(c => 
                 normalizarTexto(c.nome).includes(valorDigitado) && 
                 !tentativasRealizadas.includes(c.nome)
             );
@@ -144,11 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const item = document.createElement("div");
                     item.className = "sugestao-item";
                     
-                    // Cria dinamicamente o ícone minúsculo com base no nome
-                    const nomeParaIcone = campeao.nome.toLowerCase().replace(/['\s]/g, "");
-                    const caminhoIcone = `../icone_champions/${nomeParaIcone}.jpg`;
-
-                    item.innerHTML = `<img src="${caminhoIcone}" alt="${campeao.nome}" onerror="this.src='default/logo.jpg';" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"> <span>${campeao.nome}</span>`;
+                    item.innerHTML = `<img src="${campeao.imagem}" alt="${campeao.nome}" onerror="this.src='../default/logo.jpg';" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"> <span>${campeao.nome}</span>`;
                     
                     item.addEventListener("click", () => {
                         inputCampeao.value = campeao.nome;
@@ -160,13 +169,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     listaSugestoes.appendChild(item);
                 });
                 listaSugestoes.style.display = "block";
-                mapearSonsBotoes(); // Aplica som de hover nos itens da lista
+                mapearSonsBotoes(); 
             } else {
                 listaSugestoes.style.display = "none";
             }
         });
 
-        // Fecha a caixinha se clicar fora
+        // Fecha a caixinha se clicar fora do input
         document.addEventListener("click", (e) => {
             if (e.target !== inputCampeao) {
                 listaSugestoes.style.display = "none";
@@ -186,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const nomeDigitado = normalizarTexto(inputCampeao.value);
         if (nomeDigitado === "") return;
 
-        const campeaoEncontrado = LISTA_CAMPEOES.find(c => normalizarTexto(c.nome) === nomeDigitado);
+        const campeaoEncontrado = LISTA_CAMPEOES_BARRA.find(c => normalizarTexto(c.nome) === nomeDigitado);
 
         if (campeaoEncontrado) {
             if (!tentativasRealizadas.includes(campeaoEncontrado.nome)) {
@@ -201,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // SISTEMA DE VALIDAÇÃO (VITÓRIA / ZOOMS DE ERRO)
+    // 6. SISTEMA DE VALIDAÇÃO (VITÓRIA / ZOOMS DE ERRO)
     // ==========================================================================
     function verificarResposta(nomeCampeao) {
         tentativas++;
@@ -213,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const alvoCorreto = normalizarTexto(splashAtual.campeao);
 
         if (palpite === alvoCorreto) {
-            // VITÓRIA!
+            // ACERTOU!
             if (splash) splash.className = "revelado";
             
             if (popupVitoria) {
@@ -233,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // ERROU! (Aplica zoom de afastamento baseado nas tentativas)
+        // ERROU! (Aplica zoom de afastamento)
         if (splash) {
             switch (tentativas) {
                 case 1: splash.className = "zoom-2"; break;

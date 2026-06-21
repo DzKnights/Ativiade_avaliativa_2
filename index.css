@@ -3,7 +3,7 @@ body {
     margin: 0;
     min-height: 100vh;
     /* CORRIGIDO: Fundo-1.jpg está na raiz, sai da pasta com ../ */
-    background-image: url('/default/Fundo.jpg');
+    background-image: url('default/Fundo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

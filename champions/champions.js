@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // CONFIGURAÇÃO DOS LINKS DE REDIRECIONAMENTO DOS MODOS
     const CONFIG_BOTOES_POPUP = {
-        "btn-champions": "champions.html",
         "btn-falas": "../falas/falas.html",
         "btn-splash-campeoes": "../splash_campeoes/splash_campeoes.html"
     };

@@ -764,6 +764,9 @@ td img {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
 }
 
+#btn-champions { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_camp.jpg'); }
+#btn-falas { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../default/fundo_falas.jpg'); background-position: center 25%; }
+
 /* Efeito de surgimento animado ao errar */
 @keyframes slideInErro {
     from {

@@ -2,20 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // =========================================================
     // CONFIGURAÇÕES DE SONS (CORRIGIDO: Voltando uma pasta com ../)
     // =========================================================
-    const CAMINHO_SOM_HOVER = "../default/hover.mp3"; 
-    const CAMINHO_SOM_CLICK = "../default/click.mp3";
+    const CAMINHO_SOM_HOVER = "default/hover.mp3"; 
+    const CAMINHO_SOM_CLICK = "default/click.mp3";
     const VOLUME_SOM = 0.5; 
 
     // =========================================================
     // CONFIGURAÇÕES DE DESTINOS (CORRIGIDO: Descomentado)
     // =========================================================
     const CONFIG_BOTOES = {
-        "btn-champions": "../champions/champions.html",
-        "btn-falas": "../falas/falas.html",
-        "btn-habilidade": "../habilidade/habilidade.html",
-        "btn-emoji": "../emoji/emoji.html",
-        "btn-splash-campeoes": "../Splash_Art/splash_campeoes.html",
-        "btn-splash-itens": "../splash_itens.html"
+        "btn-champions": "champions/champions.html",
+        "btn-falas": "falas/falas.html",
+        "btn-habilidade": "habilidade/habilidade.html",
+        "btn-emoji": "emoji/emoji.html",
+        "btn-splash-campeoes": "Splash_Art/splash_campeoes.html",
+        "btn-splash-itens": "splash_itens.html"
     };
 
     // =========================================================

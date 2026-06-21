@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // CONFIGURAÇÃO DOS LINKS DE REDIRECIONAMENTO DOS MODOS
     const CONFIG_BOTOES_POPUP = {
         "btn-falas": "../falas/falas.html",
-        "btn-splash-campeoes": "../splash_campeoes/splash_campeoes.html"
+        "btn-splash-campeoes": "../Splash_Art/splash_campeoes.html"
     };
 
     // Variáveis de controle de estado interno

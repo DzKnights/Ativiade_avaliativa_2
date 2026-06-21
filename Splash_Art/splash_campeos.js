@@ -10,6 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Erro: LISTA_SPLASH não foi carregada.");
         return;
     }
+    
+    // CONFIGURAÇÃO DOS LINKS DE REDIRECIONAMENTO DOS MODOS
+    const CONFIG_BOTOES_POPUP = {
+        "btn-falas": "../falas/falas.html",
+        "btn-champions": "../champions/champions.html"
+    };
 
     // Configuração dos botões do menu superior (Voltar / Próximo)
     const configmenu = {

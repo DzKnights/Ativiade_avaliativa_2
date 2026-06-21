@@ -203,7 +203,7 @@ h3 {
 .revelado { transform: scale(1); }
 
 /* ==========================================================================
-   4. SISTEMA DE POPUPS E REDIRECIONAMENTOS (CORRIGIDO)
+   4. SISTEMA DE POPUPS E REDIRECIONAMENTOS (IMAGENS CORRIGIDAS)
    ========================================================================== */
 .popup-overlay {
     position: fixed;
@@ -310,7 +310,7 @@ h3 {
     text-transform: uppercase;
 }
 
-/* BOTÕES INTERNOS CONFIGURADOS COM IMAGEM DE FUNDO */
+/* BOTÕES INTERNOS CONFIGURADOS COM OS ARQUIVOS DO REPOSITÓRIO GITHUB */
 .btn-modo-menu {
     color: white;
     font-size: 1.15rem;
@@ -336,11 +336,11 @@ h3 {
 }
 
 #btn-champions {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../default/bg-champions.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../default/fundo_champions.png');
 }
 
 #btn-falas {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../default/bg-falas.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../default/fundo_falas.png');
 }
 
 .btn-modo-menu:hover {

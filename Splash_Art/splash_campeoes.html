@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz of Legends - Splash Art</title>
     <link rel="icon" href="default/logo.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="Splash_Campeoes.css">
+    <link rel="stylesheet" href="splash_campeoes.css">
 </head>
 
 <body>
@@ -36,6 +36,7 @@
         </div>
     </div>
 
+    <!-- CAIXA PRINCIPAL -->
     <div class="caixa-texto">
 
         <button class="menu" id="voltar">VOLTAR</button>
@@ -62,6 +63,7 @@
             <button id="btn-enviar">➔</button>
         </div>
 
+        <!-- CONTAINER DO HISTÓRICO ADICIONADO AQUI -->
         <div id="container-historico" style="margin-top: 25px;">
             <p class="titulo-tentativas" style="font-weight: bold; color: #fff; text-align: center; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-size: 14px;">Suas Tentativas</p>
             <div id="historico-tentativas" style="display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; padding-right: 5px;"></div>
@@ -72,7 +74,9 @@
     <audio id="audio-hover" src="../default/hover.mp3" preload="auto"></audio>
     <audio id="audio-click" src="../default/click.mp3" preload="auto"></audio>
 
-    <script src="Lista_Splash.js"></script>
+    <!-- Mantidos os nomes originais em minúsculo para evitar o erro de carregamento -->
+    <script src="lista_camp.js"></script>
+    <script src="lista_splash.js"></script>
     <script src="splash_campeoes.js"></script>
 
 </body>
